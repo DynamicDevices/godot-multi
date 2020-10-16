@@ -1,8 +1,14 @@
 extends CanvasLayer
 
-
+func set_player_info():
+	if (!$PanelPlayer/txtPlayerName.text.empty()):
+		gamestate.player_info.name = $PanelPlayer/txtPlayerName.text
+	gamestate.player_info.char_color = $PanelPlayer/btColor.color
 
 func _on_btCreate_pressed():
+	# Properly set the local player information
+	set_player_info()
+	
 	# Gather values from the GUI and fill the network.server_info dictionary
 	if (!$PanelHost/txtServerName.text.empty()):
 		network.server_info.name = $PanelHost/txtServerName.text
@@ -14,6 +20,10 @@ func _on_btCreate_pressed():
 	network.create_server()
 
 func _on_btJoin_pressed():
+	
+	# Properly set the local player information
+	set_player_info()
+	
 	var port = int($PanelJoin/txtJoinPort.text)
 	var ip = $PanelJoin/txtJoinIP.text
 	print("Joining Server")

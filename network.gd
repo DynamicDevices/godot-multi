@@ -6,9 +6,13 @@ var server_info = {
 	used_port = 0         # Listening port
 }
 
+var players = {}		  # List of all players
+
 signal server_created     # when server is successfully created
 signal join_success       # When the peer successfully joins a server
 signal join_fail          # Failed to join a server
+signal player_list_changed                     # List of players has been changed
+signal player_removed(pinfo)                   # A player has been removed from the list
 
 func create_server():
 	# Initialize the networking system
@@ -25,6 +29,9 @@ func create_server():
 	# Tell the server has been created successfully
 	emit_signal("server_created")
 
+	# Register the server's player in the local player list
+	register_player(gamestate.player_info)
+	
 func join_server(ip, port):
 	var net = NetworkedMultiplayerENet.new()
 	
@@ -42,13 +49,24 @@ func _on_player_connected(id):
 
 # Everyone gets notified whenever someone disconnects from the server
 func _on_player_disconnected(id):
-	pass
-
+	print("Player ", players[id].name, " disconnected from server")
+	# Update the player tables
+	if (get_tree().is_network_server()):
+		# Unregister the player from the server's list
+		unregister_player(id)
+		# Then on all remaining peers
+		rpc("unregister_player", id)
 
 # Peer trying to connect to server is notified on success
 func _on_connected_to_server():
 	emit_signal("join_success")
-
+	# Update the player_info dictionary with the obtained unique network ID
+	gamestate.player_info.net_id = get_tree().get_network_unique_id()
+	# Request the server to register this new player across all connected players
+	rpc_id(1, "register_player", gamestate.player_info)
+	# And register itself on the local list
+	register_player(gamestate.player_info)
+	
 # Peer trying to connect to server is notified on failure
 func _on_connection_failed():
 	emit_signal("join_fail")
@@ -56,8 +74,38 @@ func _on_connection_failed():
 
 # Peer is notified when disconnected from server
 func _on_disconnected_from_server():
-	pass
-
+	print("Disconnected from server")
+	# Clear the internal player list
+	players.clear()
+	# Reset the player info network ID
+	gamestate.player_info.net_id = 1
+	
+remote func register_player(pinfo):
+	if (get_tree().is_network_server()):
+		# We are on the server, so distribute the player list information throughout the connected players
+		for id in players:
+			# Send currently iterated player info to the new player
+			rpc_id(pinfo.net_id, "register_player", players[id])
+			# Send new player info to currently iterated player, skipping the server (which will get the info shortly)
+			if (id != 1):
+				rpc_id(id, "register_player", pinfo)
+	
+	# Now to code that will be executed regardless of being on client or server
+	print("Registering player ", pinfo.name, " (", pinfo.net_id, ") to internal player table")
+	players[pinfo.net_id] = pinfo          # Create the player entry in the dictionary
+	emit_signal("player_list_changed")     # And notify that the player list has been changed
+	
+remote func unregister_player(id):
+	print("Removing player ", players[id].name, " from internal table")
+	# Cache the player info because it's still necessary for some upkeeping
+	var pinfo = players[id]
+	# Remove the player from the list
+	players.erase(id)
+	# And notify the list has been changed
+	emit_signal("player_list_changed")
+	# Emit the signal that is meant to be intercepted only by the server
+	emit_signal("player_removed", pinfo)
+	
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_on_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_on_player_disconnected")

@@ -10,7 +10,7 @@ script = ExtResource( 1 )
 [node name="PanelHost" type="Panel" parent="."]
 margin_left = 13.0
 margin_top = 185.0
-margin_right = 298.0
+margin_right = 312.0
 margin_bottom = 347.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -101,7 +101,7 @@ __meta__ = {
 [node name="PanelJoin" type="Panel" parent="."]
 margin_left = 14.0
 margin_top = 350.0
-margin_right = 298.0
+margin_right = 311.0
 margin_bottom = 473.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -169,10 +169,10 @@ __meta__ = {
 }
 
 [node name="PanelPlayer" type="Panel" parent="."]
-margin_left = 13.2864
-margin_top = 12.7027
-margin_right = 299.286
-margin_bottom = 180.703
+margin_left = 13.0
+margin_top = 13.0
+margin_right = 311.0
+margin_bottom = 181.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -217,6 +217,7 @@ margin_left = 105.0
 margin_top = 110.0
 margin_right = 180.0
 margin_bottom = 130.0
+color = Color( 1, 1, 1, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
