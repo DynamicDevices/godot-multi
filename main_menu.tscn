@@ -1,0 +1,234 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://main_menu.gd" type="Script" id=1]
+
+[sub_resource type="ImageTexture" id=1]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="PanelHost" type="Panel" parent="."]
+margin_left = 13.0
+margin_top = 185.0
+margin_right = 298.0
+margin_bottom = 347.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PanelHost"]
+margin_left = 99.0
+margin_top = 8.0
+margin_right = 184.0
+margin_bottom = 22.0
+text = "Create Server"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="PanelHost"]
+margin_left = 24.0
+margin_top = 32.0
+margin_right = 110.0
+margin_bottom = 46.0
+text = "Server  Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="txtServerName" type="LineEdit" parent="PanelHost"]
+margin_left = 23.0
+margin_top = 49.0
+margin_right = 268.0
+margin_bottom = 73.0
+text = "My Server"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="PanelHost"]
+margin_left = 27.0
+margin_top = 78.0
+margin_right = 67.0
+margin_bottom = 92.0
+text = "Port"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="txtServerPort" type="LineEdit" parent="PanelHost"]
+margin_left = 24.0
+margin_top = 96.0
+margin_right = 82.0
+margin_bottom = 120.0
+text = "4546"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="PanelHost"]
+margin_left = 107.0
+margin_top = 79.0
+margin_right = 216.0
+margin_bottom = 93.0
+text = "Max Connections"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="txtMaxPlayers" type="SpinBox" parent="PanelHost"]
+margin_left = 104.0
+margin_top = 96.0
+margin_right = 162.0
+margin_bottom = 120.0
+min_value = 2.0
+max_value = 16.0
+value = 6.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btCreate" type="Button" parent="PanelHost"]
+margin_left = 222.0
+margin_top = 132.0
+margin_right = 275.0
+margin_bottom = 152.0
+text = "Create"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelJoin" type="Panel" parent="."]
+margin_left = 14.0
+margin_top = 350.0
+margin_right = 298.0
+margin_bottom = 473.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PanelJoin"]
+margin_left = 110.0
+margin_top = 9.0
+margin_right = 177.0
+margin_bottom = 23.0
+text = "Join Server"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="PanelJoin"]
+margin_left = 25.0
+margin_top = 31.0
+margin_right = 65.0
+margin_bottom = 45.0
+text = "IP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="txtJoinIP" type="LineEdit" parent="PanelJoin"]
+margin_left = 21.0
+margin_top = 47.0
+margin_right = 97.0
+margin_bottom = 71.0
+text = "127.0.0.1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="PanelJoin"]
+margin_left = 135.0
+margin_top = 29.0
+margin_right = 175.0
+margin_bottom = 43.0
+text = "Port"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="txtJoinPort" type="LineEdit" parent="PanelJoin"]
+margin_left = 133.0
+margin_top = 48.0
+margin_right = 191.0
+margin_bottom = 72.0
+text = "4546"
+selecting_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btJoin" type="Button" parent="PanelJoin"]
+margin_left = 224.0
+margin_top = 93.0
+margin_right = 273.0
+margin_bottom = 113.0
+text = "Join"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelPlayer" type="Panel" parent="."]
+margin_left = 13.2864
+margin_top = 12.7027
+margin_right = 299.286
+margin_bottom = 180.703
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PanelPlayer"]
+margin_left = 23.0
+margin_top = 24.0
+margin_right = 138.0
+margin_bottom = 43.0
+text = "Player Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="PanelPlayer"]
+margin_left = 104.0
+margin_top = 85.0
+margin_right = 144.0
+margin_bottom = 99.0
+text = "Color"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="txtPlayerName" type="LineEdit" parent="PanelPlayer"]
+margin_left = 23.0
+margin_top = 51.0
+margin_right = 258.0
+margin_bottom = 75.0
+text = "Player"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerIcon" type="Sprite" parent="PanelPlayer"]
+position = Vector2( 23, 94 )
+scale = Vector2( 70, 61 )
+texture = SubResource( 1 )
+
+[node name="btColor" type="ColorPickerButton" parent="PanelPlayer"]
+margin_left = 105.0
+margin_top = 110.0
+margin_right = 180.0
+margin_bottom = 130.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btDefaultColor" type="Button" parent="PanelPlayer"]
+margin_left = 105.0
+margin_top = 132.0
+margin_right = 180.0
+margin_bottom = 152.0
+text = "Default"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="PanelHost/btCreate" to="." method="_on_btCreate_pressed"]
+[connection signal="pressed" from="PanelJoin/btJoin" to="." method="_on_btJoin_pressed"]
