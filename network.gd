@@ -22,7 +22,7 @@ func create_server():
 	if (net.create_server(server_info.used_port, server_info.max_players) != OK):
 		print("Failed to create server")
 		return
-	
+
 	# Assign it into the tree
 	get_tree().set_network_peer(net)
 	

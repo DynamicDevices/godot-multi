@@ -40,3 +40,15 @@ func _ready():
 	network.connect("server_created", self, "_on_ready_to_play")
 	network.connect("join_success", self, "_on_ready_to_play")
 	network.connect("join_fail", self, "_on_join_fail")	
+
+	# Note: Feature tags are case-sensitive! It's "Server", not "server".
+	if OS.has_feature("Server"):
+		# Run your server startup code here...
+		# Note that using this check may break unit testing scripts when
+		# running them with headless or server binaries.
+		print("Running in server mode")
+		network.server_info.name = "Lobby Server"
+		network.server_info.max_players = 6
+		network.server_info.used_port = 4546
+		print("Creating server")
+		network.create_server()	
