@@ -20,7 +20,7 @@ extends Node
 # Code should be considered ALPHA
 
 var server = "127.0.0.1"
-var port = 0
+var port = 1883
 var client_id = "client_id"
 var client = null
 var ssl = false
@@ -38,27 +38,23 @@ var _timer = null
 
 signal received_message(topic, message)
 
-func _init(client_id, server, port=0, user=null, password=null, keepalive=0,ssl=false, ssl_params={}):
-	self.server = server
-	if port == 0:
-		port = 8883 if ssl else 1883
-	self.port = port
-	self.client_id = client_id
-	self.client = null
-	self.ssl = ssl
-	self.ssl_params = ssl_params
-	self.pid = 0
-	self.user = user
-	self.pswd = password
-	self.keepalive = keepalive
-	self.lw_topic = null
-	self.lw_msg = null
-	self.lw_qos = 0
-	self.lw_retain = false
-
-func _send_str(s):
-	self.sock.put_u16(len(s))     # Is this right ?
-	self.sock.put_utf8_string(s)
+#func _init(client_id, server, port=0, user=null, password=null, keepalive=0,ssl=false, ssl_params={}):
+#	self.server = server
+#	if port == 0:
+#		port = 8883 if ssl else 1883
+#	self.port = port
+#	self.client_id = client_id
+#	self.client = null
+#	self.ssl = ssl
+#	self.ssl_params = ssl_params
+#	self.pid = 0
+#	self.user = user
+#	self.pswd = password
+#	self.keepalive = keepalive
+#	self.lw_topic = null
+#	self.lw_msg = null
+#	self.lw_qos = 0
+#	self.lw_retain = false
 
 func _recv_len():
 	var n = 0
@@ -250,6 +246,9 @@ func wait_msg():
 		return
 		
 	if(!self.client.is_connected_to_host()):
+		return
+		
+	if(self.client.get_available_bytes() <= 0):
 		return
 		
 	var res = self.client.get_u8()

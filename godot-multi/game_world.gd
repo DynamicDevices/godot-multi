@@ -88,10 +88,13 @@ func _ready():
 		rpc_id(1, "spawn_players", gamestate.player_info, -1)
 
 	print("MQtt testing")
-	var mqtt_manager = preload("res://mqtt.gd")	
-	var mqtt = mqtt_manager.new("clientID", "127.0.0.1", 1883)
-	add_child(mqtt, true)
+	mqtt.server = "127.0.0.1"
+	mqtt.port = 1883
+	mqtt.user = "mqtt"
+	mqtt.pswd = "decafbad00"
+
 	mqtt.connect("received_message", self, "_on_received_message")
+
 	mqtt.connect_to_server()
 	mqtt.ping()
 	mqtt.subscribe("topic1")
