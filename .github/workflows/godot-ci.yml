@@ -23,6 +23,7 @@ jobs:
           mkdir -v -p build/windows
           cd $EXPORT_NAME
           godot -v --export "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
+          rm ../build/windows/libgitapi.dll
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
@@ -46,7 +47,7 @@ jobs:
           mkdir -v -p build/linux
           cd $EXPORT_NAME
           godot -v --export "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
-	  rm ../build/linux/libgitapi.so
+          rm ../build/linux/libgitapi.so
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
