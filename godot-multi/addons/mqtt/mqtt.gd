@@ -1,7 +1,6 @@
-extends Node
+tool
+#extends EditorPlugin
 
-#!/usr/bin/env python
-#
 # Copyright (c) 2019, Pycom Limited.
 # Some parts copyright (c) 2020, Dynamic Devices Ltd
 
@@ -18,6 +17,8 @@ extends Node
 # - qos 1,2 may not work
 #
 # Code should be considered ALPHA
+
+extends Node
 
 var server = "127.0.0.1"
 var port = 1883

@@ -35,6 +35,8 @@ func _process(delta):
 		# Apply the movement formula to obtain the new actor position
 		position += move_dir.normalized() * move_speed * delta
 
+		mqtt.publish("VR/position", String(position))
+
 		# Replicate the position
 		rset("repl_position", position)
 	else:

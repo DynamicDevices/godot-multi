@@ -28,7 +28,11 @@ config/icon="res://icon.png"
 
 gamestate="*res://gamestate.gd"
 network="*res://network.gd"
-mqtt="*res://mqtt.gd"
+mqtt="*res://addons/mqtt/mqtt.gd"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "mqtt" )
 
 [gdnative]
 
