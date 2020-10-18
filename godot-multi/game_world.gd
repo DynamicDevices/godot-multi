@@ -86,4 +86,17 @@ func _ready():
 		spawn_players(gamestate.player_info, 1)
 	else:
 		rpc_id(1, "spawn_players", gamestate.player_info, -1)
-		
+
+	print("MQtt testing")
+	var mqtt_manager = preload("res://mqtt.gd")	
+	var mqtt = mqtt_manager.new("clientID", "127.0.0.1", 1883)
+	add_child(mqtt)
+	mqtt.connect("received_message", self, "_on_received_message")
+	mqtt.connect_to_server()
+	mqtt.ping()
+	mqtt.subscribe("topic1")
+	mqtt.publish("topic1", "Hello World", false, 1)
+#	mqtt.disconnect_from_server()
+	
+func _on_received_message(topic, message):
+	print("Got message {topic} = {msg}".format( { "topic" : topic , "msg" : message } ))

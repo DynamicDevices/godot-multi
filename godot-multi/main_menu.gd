@@ -18,7 +18,7 @@ func _on_btCreate_pressed():
 	# And create the server, using the function previously added into the code
 	print("Creating Server")
 	network.create_server()
-
+	
 func _on_btJoin_pressed():
 	
 	# Properly set the local player information
@@ -40,7 +40,7 @@ func _ready():
 	network.connect("server_created", self, "_on_ready_to_play")
 	network.connect("join_success", self, "_on_ready_to_play")
 	network.connect("join_fail", self, "_on_join_fail")	
-
+	
 	# Note: Feature tags are case-sensitive! It's "Server", not "server".
 	if OS.has_feature("Server"):
 		# Run your server startup code here...
