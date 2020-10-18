@@ -3,17 +3,21 @@ extends Node
 #!/usr/bin/env python
 #
 # Copyright (c) 2019, Pycom Limited.
-#
+# Some parts copyright (c) 2020, Dynamic Devices Ltd
+
 # This software is licensed under the GNU GPL version 3 or any
 # later version, with permitted additional terms. For more information
 # see the Pycom Licence v1.0 document supplied with this file, or
 # available at https://www.pycom.io/opensource/licensing
 #
-
-# Ported to gdscript by Alex J Lennon
+#
+# Ported to gdscript by Alex J Lennon <ajlennon@dynamicdevices.co.uk>
+#
 # - ssl not implemented yet
 # - lwt not tested
 # - qos 1,2 may not work
+#
+# Code should be considered ALPHA
 
 var server = "127.0.0.1"
 var port = 0
