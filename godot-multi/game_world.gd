@@ -89,8 +89,8 @@ func _ready():
 
 	print("MQtt testing")
 	var mqtt_manager = preload("res://mqtt.gd")	
-	var mqtt = mqtt_manager.new("clientID", "127.0.0.1", 1883, "mqtt", "decafbad00")
-	add_child(mqtt)
+	var mqtt = mqtt_manager.new("clientID", "127.0.0.1", 1883)
+	add_child(mqtt, true)
 	mqtt.connect("received_message", self, "_on_received_message")
 	mqtt.connect_to_server()
 	mqtt.ping()

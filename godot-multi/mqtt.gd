@@ -82,17 +82,23 @@ func set_last_will(topic, msg, retain=false, qos=0):
 func connect_to_server(clean_session=true):
 
 	self.client = StreamPeerTCP.new()
-#	self.client.set_no_delay(true)
+	self.client.set_no_delay(true)
 	self.client.set_big_endian(true)
 	self.client.connect_to_host(self.server, self.port)
 #	if self.ssl:
 #		import ussl
 #		self.sock = ussl.wrap_socket(self.sock, **self.ssl_params)
-	if self.client.is_connected_to_host():
-#		self.wrapped_client = PacketPeerStream.new()
-#		self.wrapped_client.set_stream_peer(self.client)
-		print("Connected to server")
+	
+	# I don't think this test works...
+	while not self.client.is_connected_to_host():
+		pass
+	# todo: Add in a timeout
+	while self.client.get_status() != StreamPeerTCP.STATUS_CONNECTED:
+		pass
+	print("Connected to server")
 		
+	# May need a little delay after connecting to the server ?
+	
 	var msg = PoolByteArray()
 	# Must be an easier way of doing this...
 	msg.append(0x10);
