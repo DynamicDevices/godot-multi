@@ -118,20 +118,22 @@ func connect_to_server(clean_session=true):
 		msg[1] += 2 + len(self.lw_topic) + 2 + len(self.lw_msg)
 		msg[9] |= 0x4 | (self.lw_qos & 0x1) << 3 | (self.lw_qos & 0x2) << 3
 		msg[9] |= 1<<5 if self.lw_retain else 0
+
+	msg.append(self.client_id.length() >> 8)
+	msg.append(self.client_id.length() & 0xFF)
+	msg.append_array(self.client_id.to_ascii())
+	if self.lw_topic:
+		msg.append_array(self.lw_topic.to_ascii())
+		msg.append_array(self.lw_msg.to_ascii())
+	if self.user != null:
+		msg.append(self.user.length() >> 8)
+		msg.append(self.user.length() & 0xFF)
+		msg.append_array(self.user.to_ascii())
+		msg.append(self.pswd.length() >> 8)
+		msg.append(self.pswd.length() & 0xFF)
+		msg.append_array(self.pswd.to_ascii())
 	self.client.put_data(msg)
 	
-	#print(hex(len(msg)), hexlify(msg, ":"))
-	self.client.put_u16(self.client_id.length())
-	self.client.put_data(self.client_id.to_ascii())
-	if self.lw_topic:
-		self.client.put_data(self.lw_topic.to_ascii())
-		self.client.put_data(self.lw_msg.to_ascii())
-	if self.user != null:
-		self.client.put_u16(self.user.length())
-		self.client.put_data(self.user.to_ascii())
-		self.client.put_u16(self.pswd.length())
-		self.client.put_data(self.pswd.to_ascii())
-
 	var ret = self.client.get_data(4)
 	var error = ret[0]
 	assert(error == 0)
@@ -177,14 +179,20 @@ func publish(topic, msg, retain=false, qos=0):
 		sz >>= 7
 		i += 1
 	pkt[i] = sz
-	#print(hex(len(pkt)), hexlify(pkt, ":"))
-	self.client.put_data(pkt)
-	self.client.put_u16(topic.length())
-	self.client.put_data(topic.to_ascii())
+	
+	pkt.append(topic.length() >> 8)
+	pkt.append(topic.length() & 0xFF)
+	pkt.append_array(topic.to_ascii())
+
 	if qos > 0:
 		self.pid += 1
-		self.client.put_u16(self.pid)
-	self.client.put_data(msg.to_ascii())
+		pkt.append(self.pid >> 8)
+		pkt.append(self.pid & 0xFF)
+
+	pkt.append_array(msg.to_ascii())
+	
+	self.client.put_data(pkt)
+	
 	if qos == 1:
 		while 1:
 			var op = self.wait_msg()
